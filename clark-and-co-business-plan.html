@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clark & Co. — Business Plan & Financial Model</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:ital,wght@0,300;0,400;1,300&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1a2744; --navy-mid: #243660; --navy-bright: #2e4a8a;
+  --brick: #7a3a28; --brick-light: #9c4a34;
+  --wood: #c9a87c; --cream: #f2ede4; --parch: #e8dfcf;
+  --warm: #faf7f2; --charcoal: #1e1a16; --mid: #6b5d4f;
+  --green: #2d5a27; --green-light: #4a8a40; --green-pale: #c8e6c0;
+  --rule: rgba(30,26,22,0.1);
+}
+body { font-family: 'Barlow', sans-serif; background: var(--warm); color: var(--charcoal); }
+
+/* HEADER */
+.site-header {
+  background: var(--navy); padding: 1.5rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.header-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.2rem; font-weight: 800; text-transform: uppercase;
+  color: var(--cream); letter-spacing: 0.06em;
+}
+.header-logo span { font-family: 'Libre Baskerville', serif; font-style: italic; font-weight: 400; color: var(--wood); }
+.header-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(168,184,216,0.5);
+}
+
+/* TABS */
+.tabs {
+  background: var(--charcoal);
+  display: flex; border-bottom: none;
+  overflow-x: auto;
+}
+.tab {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 1rem 1.8rem; color: rgba(242,237,228,0.4);
+  cursor: pointer; border: none; background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s; white-space: nowrap;
+}
+.tab.active { color: var(--cream); border-bottom-color: var(--brick); }
+.tab:hover { color: var(--wood); }
+
+/* PANELS */
+.panel { display: none; padding: 2rem 2.5rem; }
+.panel.active { display: block; }
+
+/* SECTION TITLES */
+.sec-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.8rem; font-weight: 800; text-transform: uppercase;
+  color: var(--charcoal); letter-spacing: 0.02em; line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.sec-title em { font-family: 'Libre Baskerville', serif; font-style: italic; font-weight: 400; text-transform: none; color: var(--brick); }
+.sec-sub { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 0.95rem; color: var(--mid); margin-bottom: 2rem; }
+
+/* GRID HELPERS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1.2rem; margin-bottom: 1.5rem; }
+
+/* CARDS */
+.card {
+  background: var(--cream); border: 1px solid var(--rule);
+  padding: 1.5rem;
+}
+.card-navy { background: var(--navy); border-color: transparent; }
+.card-brick { background: var(--brick); border-color: transparent; }
+.card-parch { background: var(--parch); }
+.card-green { background: var(--green); border-color: transparent; }
+
+.card-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 0.4rem;
+}
+.card-label-light { color: rgba(168,184,216,0.55); }
+.card-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.2rem; font-weight: 800; color: var(--charcoal); line-height: 1;
+}
+.card-val-light { color: var(--cream); }
+.card-val-green { color: var(--green-pale); }
+.card-val-wood { color: var(--wood); }
+.card-desc {
+  font-family: 'Libre Baskerville', serif; font-style: italic;
+  font-size: 0.78rem; color: var(--mid); margin-top: 0.4rem; line-height: 1.5;
+}
+.card-desc-light { color: rgba(168,184,216,0.5); }
+
+/* CONTROLS */
+.control-group { margin-bottom: 1.5rem; }
+.control-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 0.5rem; display: flex; justify-content: space-between;
+}
+.control-label span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem; font-weight: 700; color: var(--navy);
+}
+input[type=range] {
+  width: 100%; -webkit-appearance: none; height: 3px;
+  background: var(--rule); outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--navy); cursor: pointer;
+}
+input[type=number] {
+  width: 100%; padding: 0.6rem 0.8rem;
+  border: 1px solid var(--rule); background: var(--warm);
+  font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600;
+  color: var(--charcoal); outline: none;
+}
+input[type=number]:focus { border-color: var(--navy); }
+
+/* TABLE */
+.data-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.data-table th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--mid); padding: 0.75rem 1rem; text-align: left;
+  border-bottom: 2px solid var(--rule); background: var(--parch);
+}
+.data-table td {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem; font-weight: 400; color: var(--charcoal);
+  padding: 0.85rem 1rem; border-bottom: 1px solid var(--rule);
+}
+.data-table tr:hover td { background: var(--cream); }
+.data-table .num { font-weight: 700; }
+.data-table .pos { color: var(--green); font-weight: 700; }
+.data-table .neg { color: var(--brick); font-weight: 700; }
+.data-table .highlight td { background: var(--navy) !important; color: var(--cream); }
+.data-table .highlight td.pos { color: var(--green-pale); }
+
+/* MILESTONE */
+.milestone {
+  display: flex; gap: 0; margin-bottom: 1.5rem;
+  border: 1px solid var(--rule);
+}
+.ms-item {
+  flex: 1; padding: 1.5rem; border-right: 1px solid var(--rule);
+  position: relative;
+}
+.ms-item:last-child { border-right: none; }
+.ms-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--brick); margin-bottom: 0.6rem;
+}
+.ms-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem; font-weight: 700; text-transform: uppercase;
+  color: var(--charcoal); letter-spacing: 0.03em; margin-bottom: 0.5rem;
+}
+.ms-desc {
+  font-family: 'Libre Baskerville', serif; font-style: italic;
+  font-size: 0.8rem; color: var(--mid); line-height: 1.6;
+}
+.ms-tag {
+  display: inline-block; margin-top: 0.8rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.58rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  background: var(--navy); color: var(--cream); padding: 0.25rem 0.6rem;
+}
+
+/* BAR CHART */
+.bar-chart { margin-bottom: 1.5rem; }
+.bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.6rem; }
+.bar-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mid); width: 80px; flex-shrink: 0;
+}
+.bar-track { flex: 1; height: 20px; background: var(--parch); position: relative; }
+.bar-fill { height: 100%; transition: width 0.5s ease; display: flex; align-items: center; padding-left: 0.5rem; }
+.bar-fill-navy { background: var(--navy); }
+.bar-fill-brick { background: var(--brick); }
+.bar-fill-wood { background: var(--wood); }
+.bar-fill-green { background: var(--green-light); }
+.bar-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; font-weight: 700; color: var(--cream);
+  white-space: nowrap;
+}
+.bar-val-dark { color: var(--charcoal); position: absolute; right: -60px; top: 2px; }
+
+/* CHECKLIST */
+.checklist { list-style: none; margin-bottom: 1.5rem; }
+.checklist li {
+  display: flex; gap: 0.8rem; align-items: flex-start;
+  padding: 0.8rem 0; border-bottom: 1px solid var(--rule);
+  font-family: 'Libre Baskerville', serif; font-size: 0.88rem;
+  color: var(--charcoal); line-height: 1.5;
+}
+.checklist li:last-child { border-bottom: none; }
+.check-box {
+  width: 18px; height: 18px; flex-shrink: 0;
+  border: 1.5px solid var(--navy-mid); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px; transition: background 0.15s;
+}
+.check-box.done { background: var(--navy); border-color: var(--navy); }
+.check-box.done::after { content: '✓'; color: var(--cream); font-size: 0.65rem; }
+.check-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.55rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.15rem 0.5rem; margin-left: auto; flex-shrink: 0; align-self: center;
+}
+.tag-brand { background: var(--brick); color: var(--cream); }
+.tag-ops { background: var(--navy); color: var(--cream); }
+.tag-sales { background: var(--green); color: var(--cream); }
+.tag-legal { background: var(--mid); color: var(--cream); }
+
+/* PROGRESS */
+.progress-bar { height: 6px; background: var(--rule); margin-bottom: 1.5rem; }
+.progress-fill { height: 100%; background: linear-gradient(to right, var(--navy), var(--brick)); transition: width 0.4s; }
+
+/* DIVIDER */
+.divider { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  border-left: 3px solid var(--brick); padding: 1rem 1.2rem;
+  background: rgba(122,58,40,0.06); margin-bottom: 1.5rem;
+}
+.highlight-box p {
+  font-family: 'Libre Baskerville', serif; font-style: italic;
+  font-size: 0.9rem; line-height: 1.7; color: var(--charcoal);
+}
+.highlight-box-navy {
+  border-left-color: var(--navy); background: rgba(26,39,68,0.06);
+}
+
+/* PHASE HEADER */
+.phase-header {
+  background: var(--charcoal); padding: 1.2rem 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1rem;
+}
+.phase-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem; font-weight: 800; text-transform: uppercase;
+  color: var(--cream); letter-spacing: 0.05em;
+}
+.phase-period {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--wood);
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  .milestone { flex-direction: column; }
+  .ms-item { border-right: none; border-bottom: 1px solid var(--rule); }
+}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="header-logo">Clark <span>&</span> Co.</div>
+  <div class="header-sub">Business Plan & Financial Model — 2026</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPanel('model')">📊 Financial Model</button>
+  <button class="tab" onclick="showPanel('revenue')">💰 Revenue Streams</button>
+  <button class="tab" onclick="showPanel('roadmap')">🗓 Year One Roadmap</button>
+  <button class="tab" onclick="showPanel('launch')">🚀 Launch Checklist</button>
+  <button class="tab" onclick="showPanel('quit')">🎯 Quit Your Jobs Calc</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- FINANCIAL MODEL -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="panel-model" class="panel active">
+  <div class="sec-title">Financial <em>Model</em></div>
+  <p class="sec-sub">Adjust the sliders to model your business. All figures are monthly.</p>
+
+  <div class="grid-2">
+    <div>
+      <div class="card card-parch" style="margin-bottom:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--mid);margin-bottom:1.2rem;">Your Inputs</div>
+        <div class="control-group">
+          <div class="control-label">Bags sold (direct, monthly) <span id="val-d2c">80</span></div>
+          <input type="range" min="0" max="500" value="80" oninput="updateModel()" id="sl-d2c">
+        </div>
+        <div class="control-group">
+          <div class="control-label">Subscribers <span id="val-subs">20</span></div>
+          <input type="range" min="0" max="300" value="20" oninput="updateModel()" id="sl-subs">
+        </div>
+        <div class="control-group">
+          <div class="control-label">Wholesale café accounts <span id="val-wh">0</span></div>
+          <input type="range" min="0" max="15" value="0" oninput="updateModel()" id="sl-wh">
+        </div>
+        <div class="control-group">
+          <div class="control-label">Avg kg per café per week <span id="val-whkg">3</span>kg</div>
+          <input type="range" min="1" max="10" value="3" oninput="updateModel()" id="sl-whkg">
+        </div>
+        <div class="control-group">
+          <div class="control-label">Bag price (retail) $<span id="val-price">18</span></div>
+          <input type="range" min="14" max="28" value="18" oninput="updateModel()" id="sl-price">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="grid-2" style="margin-bottom:1rem;">
+        <div class="card card-navy">
+          <div class="card-label card-label-light">Monthly Revenue</div>
+          <div class="card-val card-val-light" id="out-rev">$1,440</div>
+          <div class="card-desc card-desc-light">Before costs</div>
+        </div>
+        <div class="card card-brick">
+          <div class="card-label card-label-light">Monthly Costs</div>
+          <div class="card-val card-val-light" id="out-costs">$720</div>
+          <div class="card-desc card-desc-light">Beans, bags, shipping</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card card-green">
+          <div class="card-label card-label-light">Monthly Profit</div>
+          <div class="card-val card-val-green" id="out-profit">$720</div>
+          <div class="card-desc card-desc-light">After variable costs</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Annual Profit</div>
+          <div class="card-val" id="out-annual">$8,640</div>
+          <div class="card-desc">Run rate projection</div>
+        </div>
+      </div>
+      <div class="card card-parch">
+        <div class="card-label">Total Bags / Month</div>
+        <div class="card-val" id="out-bags">100</div>
+        <div style="height:6px;background:var(--rule);margin-top:0.8rem;">
+          <div id="bag-progress" style="height:100%;background:var(--navy);width:10%;transition:width 0.4s;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:0.3rem;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);">0</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);">SR800 limit ~400/mo</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);">1,000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" style="font-size:1.3rem;margin-bottom:0.3rem;">3-Year <em>Projection</em></div>
+  <p class="sec-sub" style="margin-bottom:1rem;">Based on your current inputs with realistic growth assumptions applied.</p>
+  <table class="data-table" id="projection-table">
+    <thead>
+      <tr>
+        <th>Period</th>
+        <th>Bags/Month</th>
+        <th>Subscribers</th>
+        <th>Wholesale Accts</th>
+        <th>Monthly Revenue</th>
+        <th>Monthly Profit</th>
+        <th>Annual Profit</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="proj-body"></tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REVENUE STREAMS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="panel-revenue" class="panel">
+  <div class="sec-title">Revenue <em>Streams</em></div>
+  <p class="sec-sub">Three channels. Each one compounds differently. Build all three.</p>
+
+  <div class="grid-3">
+    <div class="card card-navy">
+      <div class="card-label card-label-light">Stream 01</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;color:var(--cream);margin:0.5rem 0;">Direct to Consumer</div>
+      <div class="card-desc card-desc-light" style="margin-bottom:1rem;">Website, Instagram, farmers markets. Highest margin per bag. Slowest to scale.</div>
+      <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(168,184,216,0.45);margin-bottom:0.3rem;">Margin per bag</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:800;color:var(--wood);">~$9–11</div>
+      </div>
+    </div>
+    <div class="card card-brick">
+      <div class="card-label card-label-light">Stream 02</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;color:var(--cream);margin:0.5rem 0;">Subscriptions</div>
+      <div class="card-desc card-desc-light" style="margin-bottom:1rem;">Monthly recurring. Predictable income. The backbone of a sustainable roastery.</div>
+      <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(242,237,228,0.4);margin-bottom:0.3rem;">Margin per subscriber/mo</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:800;color:var(--cream);">~$14–18</div>
+      </div>
+    </div>
+    <div class="card card-green">
+      <div class="card-label card-label-light">Stream 03</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;color:var(--cream);margin:0.5rem 0;">Wholesale</div>
+      <div class="card-desc card-desc-light" style="margin-bottom:1rem;">Local cafés, restaurants, offices. Lower margin but volume. Transforms the numbers fast.</div>
+      <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,230,192,0.45);margin-bottom:0.3rem;">Margin per kg wholesale</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:800;color:var(--green-pale);">~$12–16</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p>The magic formula: <strong>subscriptions give you a floor</strong> (you know next month's income), <strong>wholesale gives you volume</strong> (3 café accounts = 60kg/month extra), and <strong>direct-to-consumer gives you margin</strong>. Build all three simultaneously from day one.</p>
+  </div>
+
+  <div class="sec-title" style="font-size:1.3rem;margin-bottom:1rem;">Revenue <em>Breakdown</em> at Key Milestones</div>
+  <table class="data-table">
+    <thead>
+      <tr><th>Milestone</th><th>D2C Bags</th><th>Subscribers</th><th>Wholesale Accts</th><th>Monthly Revenue</th><th>Monthly Profit</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Getting started</td><td class="num">20</td><td class="num">10</td><td class="num">0</td><td class="num">$540</td><td class="pos">$280</td></tr>
+      <tr><td>Gaining traction</td><td class="num">60</td><td class="num">40</td><td class="num">1</td><td class="num">$2,320</td><td class="pos">$1,200</td></tr>
+      <tr><td>Side hustle income</td><td class="num">100</td><td class="num">80</td><td class="num">2</td><td class="num">$4,240</td><td class="pos">$2,200</td></tr>
+      <tr><td>One person part-time</td><td class="num">150</td><td class="num">120</td><td class="num">3</td><td class="num">$6,480</td><td class="pos">$3,400</td></tr>
+      <tr><td>One person quits</td><td class="num">200</td><td class="num">180</td><td class="num">5</td><td class="num">$10,040</td><td class="pos">$5,300</td></tr>
+      <tr class="highlight"><td><strong>Both quit</strong></td><td class="num">300</td><td class="num">250</td><td class="num">8</td><td class="num">$16,500</td><td class="pos">$8,800</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec-title" style="font-size:1.3rem;margin-bottom:1rem;">Social Media <em>Strategy</em></div>
+  <div class="grid-2">
+    <div class="card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;margin-bottom:1rem;color:var(--charcoal);">What to post</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;">
+        <li style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:0.85rem;color:var(--mid);padding:0.5rem 0;border-bottom:1px solid var(--rule);">📹 Roasting process videos — the most watchable content in specialty coffee</li>
+        <li style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:0.85rem;color:var(--mid);padding:0.5rem 0;border-bottom:1px solid var(--rule);">☕ Brew guides and tasting notes for each origin</li>
+        <li style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:0.85rem;color:var(--mid);padding:0.5rem 0;border-bottom:1px solid var(--rule);">🤝 The brothers angle — two people building something real is compelling content</li>
+        <li style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:0.85rem;color:var(--mid);padding:0.5rem 0;border-bottom:1px solid var(--rule);">🏙 Chicago identity — Wrigley, Clark Street, North Side culture</li>
+        <li style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:0.85rem;color:var(--mid);padding:0.5rem 0;">🌱 Farm sourcing and origin stories</li>
+      </ul>
+    </div>
+    <div class="card card-parch">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;margin-bottom:1rem;color:var(--charcoal);">Posting cadence</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-label">Instagram</div>
+          <div class="bar-track"><div class="bar-fill bar-fill-navy" style="width:90%;"><span class="bar-val">5x/week</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">TikTok</div>
+          <div class="bar-track"><div class="bar-fill bar-fill-brick" style="width:70%;"><span class="bar-val">3x/week</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Email</div>
+          <div class="bar-track"><div class="bar-fill bar-fill-wood" style="width:30%;"><span class="bar-val">2x/month</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Stories</div>
+          <div class="bar-track"><div class="bar-fill bar-fill-green" style="width:100%;"><span class="bar-val">Daily</span></div></div>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-bottom:0;">
+        <p>TikTok roasting videos have gone viral for tiny roasters before. One good video can add 200+ subscribers overnight.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ROADMAP -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="panel-roadmap" class="panel">
+  <div class="sec-title">Year One <em>Roadmap</em></div>
+  <p class="sec-sub">Month by month. Realistic. Built around doing this part time.</p>
+
+  <div class="phase-header">
+    <div class="phase-title">Phase 1 — Foundation</div>
+    <div class="phase-period">Months 1–3</div>
+  </div>
+  <div class="milestone">
+    <div class="ms-item">
+      <div class="ms-num">Month 1</div>
+      <div class="ms-title">Set Up & Learn</div>
+      <div class="ms-desc">Buy SR800. Order first green beans from Sweet Maria's. Roast every weekend. Get familiar with the drum. Taste everything. Set up LLC and bank account.</div>
+      <span class="ms-tag">~$500 spend</span>
+    </div>
+    <div class="ms-item">
+      <div class="ms-num">Month 2</div>
+      <div class="ms-title">Brand & Build</div>
+      <div class="ms-desc">Launch Clark & Co. Instagram. Design bags and labels. Build basic Shopify store. Start posting roasting content. Give bags to 20 friends — get honest feedback.</div>
+      <span class="ms-tag">First followers</span>
+    </div>
+    <div class="ms-item">
+      <div class="ms-num">Month 3</div>
+      <div class="ms-title">First Sales</div>
+      <div class="ms-desc">Open online store. Target first 20 paying customers. Post your first roasting video on TikTok. Apply for a local farmers market spot. Launch email list.</div>
+      <span class="ms-tag">First revenue</span>
+    </div>
+  </div>
+
+  <div class="phase-header">
+    <div class="phase-title">Phase 2 — Traction</div>
+    <div class="phase-period">Months 4–6</div>
+  </div>
+  <div class="milestone">
+    <div class="ms-item">
+      <div class="ms-num">Month 4</div>
+      <div class="ms-title">Launch Subscriptions</div>
+      <div class="ms-desc">Introduce The Clark monthly sub. Target 10 subscribers first. Use recurring revenue to fund green bean purchases. Farmers market begins — talk to everyone.</div>
+      <span class="ms-tag">10 subs target</span>
+    </div>
+    <div class="ms-item">
+      <div class="ms-num">Month 5</div>
+      <div class="ms-title">Push Social Hard</div>
+      <div class="ms-desc">Commit to daily Stories, 4x TikTok per week. Collaborate with a Chicago food creator. Start approaching 2–3 local cafés with sample bags — no pitch, just samples.</div>
+      <span class="ms-tag">Social growth</span>
+    </div>
+    <div class="ms-item">
+      <div class="ms-num">Month 6</div>
+      <div class="ms-title">First Wholesale</div>
+      <div class="ms-desc">Land your first café account. Even one account at 3kg/week = $150+/week in predictable revenue. Review numbers, assess if upgrade roaster is needed.</div>
+      <span class="ms-tag">First café account</span>
+    </div>
+  </div>
+
+  <div class="phase-header">
+    <div class="phase-title">Phase 3 — Scale</div>
+    <div class="phase-period">Months 7–12</div>
+  </div>
+  <div class="milestone">
+    <div class="ms-item">
+      <div class="ms-num">Month 7–8</div>
+      <div class="ms-title">Compound Growth</div>
+      <div class="ms-desc">Hit 50 subscribers. Target 3 wholesale accounts. Start running small paid Instagram ads — coffee is highly targetable by zip code. Consider upgrading to Behmor for batch size.</div>
+      <span class="ms-tag">50 subs target</span>
+    </div>
+    <div class="ms-item">
+      <div class="ms-num">Month 9–10</div>
+      <div class="ms-title">Professionalise</div>
+      <div class="ms-desc">Redesign packaging if needed. Launch a proper gift box for the holidays. Get into one Chicago-based gift guide or food blog. Holiday season is huge for coffee gifting.</div>
+      <span class="ms-tag">Q4 push</span>
+    </div>
+    <div class="ms-item">
+      <div class="ms-num">Month 11–12</div>
+      <div class="ms-title">Review & Plan Yr 2</div>
+      <div class="ms-desc">Audit the numbers. Are you at $2k+ monthly profit? If yes: upgrade roaster, scale wholesale, consider one person going part-time. Set Year 2 targets.</div>
+      <span class="ms-tag">Decision point</span>
+    </div>
+  </div>
+
+  <div class="sec-title" style="font-size:1.3rem;margin:1.5rem 0 1rem;">Key <em>Metrics</em> to Track Weekly</div>
+  <div class="grid-4">
+    <div class="card card-navy">
+      <div class="card-label card-label-light">Track weekly</div>
+      <div class="card-val card-val-light" style="font-size:1.5rem;">Bags sold</div>
+      <div class="card-desc card-desc-light">Your core volume number</div>
+    </div>
+    <div class="card card-brick">
+      <div class="card-label card-label-light">Track weekly</div>
+      <div class="card-val card-val-light" style="font-size:1.5rem;">Sub churn</div>
+      <div class="card-desc card-desc-light">How many cancel each month</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Track weekly</div>
+      <div class="card-val" style="font-size:1.5rem;">Avg order $</div>
+      <div class="card-desc">Try to push above $28</div>
+    </div>
+    <div class="card card-parch">
+      <div class="card-label">Track weekly</div>
+      <div class="card-val" style="font-size:1.5rem;">IG reach</div>
+      <div class="card-desc">Correlates with new customers</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- LAUNCH CHECKLIST -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="panel-launch" class="panel">
+  <div class="sec-title">Launch <em>Checklist</em></div>
+  <p class="sec-sub">Everything you need to do before your first sale. Check things off as you go.</p>
+
+  <div id="checklist-progress-label" style="font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:0.5rem;">0 of 24 complete</div>
+  <div class="progress-bar" style="margin-bottom:1.5rem;">
+    <div class="progress-fill" id="checklist-progress" style="width:0%"></div>
+  </div>
+
+  <div class="phase-header" style="margin-bottom:0.5rem;">
+    <div class="phase-title">Legal & Operations</div>
+    <span class="ms-tag" style="background:var(--mid);">Do first</span>
+  </div>
+  <ul class="checklist">
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Register LLC</strong> — Clark & Co. Coffee Roasters LLC. Illinois filing is around $150. Use LegalZoom or file direct with the IL Secretary of State.</div><span class="check-tag tag-legal">Legal</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Open business bank account</strong> — keep finances separate from day one. Makes taxes far easier.</div><span class="check-tag tag-legal">Legal</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Get a food handler's license</strong> — required in Illinois to sell food products. Apply through the Chicago Dept of Public Health.</div><span class="check-tag tag-legal">Legal</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Check home roasting regulations</strong> — confirm your home setup meets Chicago's cottage food laws. Consult CDPH if unsure.</div><span class="check-tag tag-legal">Legal</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Get business insurance</strong> — product liability coverage. Around $500/year for small food businesses.</div><span class="check-tag tag-legal">Legal</span></li>
+  </ul>
+
+  <div class="phase-header" style="margin-bottom:0.5rem;">
+    <div class="phase-title">Equipment & Sourcing</div>
+    <span class="ms-tag">Get roasting</span>
+  </div>
+  <ul class="checklist">
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Buy Fresh Roast SR800</strong> — from Sweet Maria's for the free green bean bundle. ~$289.</div><span class="check-tag tag-ops">Ops</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Order first green bean samples</strong> — Sweet Maria's has a sample pack program. Try 6–8 origins before committing to stock.</div><span class="check-tag tag-ops">Ops</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Set up roasting space</strong> — dedicated circuit, ventilation, fire extinguisher, smoke detector. Garage is ideal.</div><span class="check-tag tag-ops">Ops</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Buy packaging</strong> — resealable kraft bags with one-way valve, labels. Pacific Bag Inc or CustomCupsFob for small quantities.</div><span class="check-tag tag-ops">Ops</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Get a decent kitchen scale</strong> — 0.1g precision for weighing green and roasted batches consistently.</div><span class="check-tag tag-ops">Ops</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Set up roast logging</strong> — even a simple spreadsheet tracking date, origin, batch weight, temp profile, and cupping notes.</div><span class="check-tag tag-ops">Ops</span></li>
+  </ul>
+
+  <div class="phase-header" style="margin-bottom:0.5rem;">
+    <div class="phase-title">Brand & Online Presence</div>
+    <span class="ms-tag" style="background:var(--brick);">Brand</span>
+  </div>
+  <ul class="checklist">
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Secure @clarkandco.coffee</strong> (or similar) on Instagram and TikTok — do this today before someone else does.</div><span class="check-tag tag-brand">Brand</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Buy domain</strong> — clarkandco.coffee is a real TLD. Check on Namecheap. Also grab clarkandcocoffee.com as backup.</div><span class="check-tag tag-brand">Brand</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Finalise logo and brand identity</strong> — you've got the website mockup direction. Get a final logo designed (Fiverr or 99designs for budget).</div><span class="check-tag tag-brand">Brand</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Print first batch of labels</strong> — include: name, origin, process, roast date, tasting notes, weight, and your website.</div><span class="check-tag tag-brand">Brand</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Set up Shopify store</strong> — Basic plan is $29/month. Integrates with subscriptions via ReCharge or Bold Subscriptions.</div><span class="check-tag tag-ops">Ops</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Set up email list</strong> — Klaviyo is free up to 500 contacts and built for ecomm. Start collecting emails from day one.</div><span class="check-tag tag-brand">Brand</span></li>
+  </ul>
+
+  <div class="phase-header" style="margin-bottom:0.5rem;">
+    <div class="phase-title">Sales & Growth</div>
+    <span class="ms-tag" style="background:var(--green);">Sales</span>
+  </div>
+  <ul class="checklist">
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Give away 20 bags</strong> — friends, family, neighbours, coworkers. Ask for honest feedback and a social post if they love it.</div><span class="check-tag tag-sales">Sales</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Apply to a Chicago farmers market</strong> — Green City Market and Logan Square Farmers Market are the best for premium food products.</div><span class="check-tag tag-sales">Sales</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Identify 5 local cafés to approach</strong> — independent spots, not chains. Walk in with a free bag and a one-page overview. No hard pitch.</div><span class="check-tag tag-sales">Sales</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Post first TikTok roasting video</strong> — film the SR800 in action. The visuals are naturally compelling. Keep it under 60 seconds.</div><span class="check-tag tag-brand">Brand</span></li>
+    <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Launch subscriptions</strong> — even if it's just 5 people you know personally. Recurring revenue from month one builds a habit and a base.</div><span class="check-tag tag-sales">Sales</span></li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- QUIT YOUR JOBS CALC -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="panel-quit" class="panel">
+  <div class="sec-title">Quit Your Jobs <em>Calculator</em></div>
+  <p class="sec-sub">Enter your real numbers. See exactly what Clark & Co. needs to hit.</p>
+
+  <div class="grid-2">
+    <div>
+      <div class="card card-parch" style="margin-bottom:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--mid);margin-bottom:1.2rem;">Your Current Income</div>
+        <div class="grid-2" style="margin-bottom:0;">
+          <div class="control-group" style="margin-bottom:0;">
+            <div class="control-label" style="margin-bottom:0.4rem;">Your annual salary ($)</div>
+            <input type="number" id="sal1" value="65000" oninput="updateQuit()">
+          </div>
+          <div class="control-group" style="margin-bottom:0;">
+            <div class="control-label" style="margin-bottom:0.4rem;">Brother's annual salary ($)</div>
+            <input type="number" id="sal2" value="65000" oninput="updateQuit()">
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--mid);margin-bottom:1.2rem;">Safety Buffer</div>
+        <div class="control-group" style="margin-bottom:0;">
+          <div class="control-label">Months of runway before quitting <span id="val-runway">6</span> months</div>
+          <input type="range" min="3" max="24" value="6" oninput="updateQuit()" id="sl-runway">
+        </div>
+      </div>
+      <div class="card card-parch">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--mid);margin-bottom:1.2rem;">Business Costs (monthly)</div>
+        <div class="control-group">
+          <div class="control-label">Fixed costs (sub fees, insurance, etc.) $<span id="val-fixed">150</span></div>
+          <input type="range" min="50" max="1000" value="150" oninput="updateQuit()" id="sl-fixed">
+        </div>
+        <div class="control-group" style="margin-bottom:0;">
+          <div class="control-label">Variable cost per bag $<span id="val-varper">8.50</span></div>
+          <input type="range" min="5" max="14" step="0.5" value="8.5" oninput="updateQuit()" id="sl-varper">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card card-navy" style="margin-bottom:1rem;">
+        <div class="card-label card-label-light">One person quits — needs monthly profit of</div>
+        <div class="card-val card-val-wood" id="q-one" style="font-size:2.5rem;">$5,417</div>
+        <div class="card-desc card-desc-light" id="q-one-bags">Requires approx. 638 bags/month</div>
+      </div>
+      <div class="card card-brick" style="margin-bottom:1rem;">
+        <div class="card-label card-label-light">Both quit — needs monthly profit of</div>
+        <div class="card-val card-val-light" id="q-both" style="font-size:2.5rem;">$10,833</div>
+        <div class="card-desc card-desc-light" id="q-both-bags">Requires approx. 1,275 bags/month</div>
+      </div>
+      <div class="card card-green">
+        <div class="card-label card-label-light">Runway needed in the bank before quitting</div>
+        <div class="card-val card-val-green" id="q-runway" style="font-size:2.5rem;">$32,500</div>
+        <div class="card-desc card-desc-light">6 months of one salary as safety net</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" style="font-size:1.3rem;margin:1.5rem 0 1rem;">The <em>Realistic</em> Timeline</div>
+  <table class="data-table">
+    <thead>
+      <tr><th>Milestone</th><th>Target Date</th><th>Monthly Profit Needed</th><th>What gets you there</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Break even on equipment</td>
+        <td class="num">Month 3–4</td>
+        <td class="num">$500+</td>
+        <td>20 bags/week direct + 10 subs</td>
+      </tr>
+      <tr>
+        <td>Beer money / reinvestment</td>
+        <td class="num">Month 6</td>
+        <td class="num">$1,000–2,000</td>
+        <td>50 bags/week + 30 subs + 1 café</td>
+      </tr>
+      <tr>
+        <td>Significant side income</td>
+        <td class="num">Month 9–12</td>
+        <td class="num">$2,500–4,000</td>
+        <td>100 bags/week + 80 subs + 3 cafés</td>
+      </tr>
+      <tr>
+        <td>One person goes part-time</td>
+        <td class="num">Year 2</td>
+        <td class="num">$3,500–5,000</td>
+        <td>150 bags/week + 120 subs + 4 cafés</td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>One person quits</strong></td>
+        <td class="num">Year 2–3</td>
+        <td class="pos" id="q-one-row">$5,417/mo</td>
+        <td>200+ bags/week + 180 subs + 5 cafés</td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>Both quit</strong></td>
+        <td class="num">Year 3–5</td>
+        <td class="pos" id="q-both-row">$10,833/mo</td>
+        <td>300+ bags/week + 250 subs + 8 cafés + wholesale</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box highlight-box-navy">
+    <p>The honest truth: most small roasteries that succeed do so because of <strong>subscriptions + one or two anchor wholesale accounts</strong>. Landing a local café that buys 5kg/week is the equivalent of 50 retail customers — and it happens with one conversation and a free bag of samples.</p>
+  </div>
+</div>
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function fmtN(n) { return Math.round(n).toLocaleString(); }
+
+function updateModel() {
+  const d2c = +document.getElementById('sl-d2c').value;
+  const subs = +document.getElementById('sl-subs').value;
+  const wh = +document.getElementById('sl-wh').value;
+  const whkg = +document.getElementById('sl-whkg').value;
+  const price = +document.getElementById('sl-price').value;
+
+  document.getElementById('val-d2c').textContent = d2c;
+  document.getElementById('val-subs').textContent = subs;
+  document.getElementById('val-wh').textContent = wh;
+  document.getElementById('val-whkg').textContent = whkg;
+  document.getElementById('val-price').textContent = price;
+
+  const subPrice = price * 1.8; // subs pay roughly 1.8x a bag equivalent per month
+  const whPricePerKg = 16; // wholesale per kg
+  const whKgPerMonth = wh * whkg * 4.33;
+
+  const rev = (d2c * price) + (subs * subPrice) + (whKgPerMonth * whPricePerKg);
+  const varCost = 8.5; // per bag equivalent
+  const totalBagEq = d2c + (subs * 2) + (whKgPerMonth * 4); // rough bag equivalents
+  const costs = totalBagEq * varCost;
+  const profit = rev - costs;
+  const totalBags = d2c + Math.round(subs * 2);
+
+  document.getElementById('out-rev').textContent = fmt(rev);
+  document.getElementById('out-costs').textContent = fmt(costs);
+  document.getElementById('out-profit').textContent = fmt(profit);
+  document.getElementById('out-annual').textContent = fmt(profit * 12);
+  document.getElementById('out-bags').textContent = fmtN(totalBags);
+  document.getElementById('bag-progress').style.width = Math.min(100, (totalBags / 1000) * 100) + '%';
+
+  // Projection table
+  const tbody = document.getElementById('proj-body');
+  tbody.innerHTML = '';
+  const periods = [
+    {label:'Now (baseline)', d2cM:1, subsM:1, whM:1},
+    {label:'Month 3', d2cM:1.5, subsM:1.8, whM:1.2},
+    {label:'Month 6', d2cM:2.2, subsM:3, whM:1.5},
+    {label:'Month 9', d2cM:3, subsM:5, whM:2},
+    {label:'Year 1 End', d2cM:4, subsM:7, whM:2.5},
+    {label:'Year 2 End', d2cM:7, subsM:12, whM:4},
+    {label:'Year 3 End', d2cM:12, subsM:20, whM:6},
+  ];
+  periods.forEach((p, i) => {
+    const pd2c = Math.round(d2c * p.d2cM);
+    const psubs = Math.round(subs * p.subsM);
+    const pwh = Math.round(wh * p.whM);
+    const pwhkg = whkg * 4.33 * pwh;
+    const prev = (pd2c * price) + (psubs * subPrice) + (pwhkg * whPricePerKg);
+    const pcosts = ((pd2c + psubs*2 + pwhkg*4) * varCost);
+    const pprofit = prev - pcosts;
+    const tr = document.createElement('tr');
+    if (i === 6) tr.classList.add('highlight');
+    tr.innerHTML = `<td>${p.label}</td><td class="num">${fmtN(pd2c)}</td><td class="num">${fmtN(psubs)}</td><td class="num">${fmtN(pwh)}</td><td class="num">${fmt(prev)}</td><td class="${pprofit>0?'pos':'neg'}">${fmt(pprofit)}</td><td class="${pprofit>0?'pos':'neg'}">${fmt(pprofit*12)}</td><td>${pprofit > 10000 ? '🎯 Quit territory' : pprofit > 5000 ? '📈 Part-time viable' : pprofit > 1000 ? '🌱 Growing' : '🚀 Just starting'}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function updateQuit() {
+  const sal1 = +document.getElementById('sal1').value || 0;
+  const sal2 = +document.getElementById('sal2').value || 0;
+  const runway = +document.getElementById('sl-runway').value;
+  const fixed = +document.getElementById('sl-fixed').value;
+  const varper = +document.getElementById('sl-varper').value;
+
+  document.getElementById('val-runway').textContent = runway;
+  document.getElementById('val-fixed').textContent = fixed;
+  document.getElementById('val-varper').textContent = varper.toFixed(2);
+
+  const oneMonthly = (sal1 / 12) + fixed;
+  const bothMonthly = ((sal1 + sal2) / 12) + fixed;
+  const oneBags = Math.ceil(oneMonthly / (18 - varper));
+  const bothBags = Math.ceil(bothMonthly / (18 - varper));
+  const runwayAmt = (sal1 / 12) * runway;
+
+  document.getElementById('q-one').textContent = fmt(oneMonthly);
+  document.getElementById('q-both').textContent = fmt(bothMonthly);
+  document.getElementById('q-runway').textContent = fmt(runwayAmt);
+  document.getElementById('q-one-bags').textContent = `Requires approx. ${fmtN(oneBags)} bags/month at $18 retail`;
+  document.getElementById('q-both-bags').textContent = `Requires approx. ${fmtN(bothBags)} bags/month at $18 retail`;
+  document.getElementById('q-one-row').textContent = fmt(oneMonthly) + '/mo';
+  document.getElementById('q-both-row').textContent = fmt(bothMonthly) + '/mo';
+}
+
+const CHECKLIST_API_BASE = '/api/checklist';
+
+function getChecklistBoxes() {
+  return Array.from(document.querySelectorAll('.check-box'));
+}
+
+async function loadChecklistState() {
+  const boxes = getChecklistBoxes();
+  try {
+    const res = await fetch(CHECKLIST_API_BASE, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to load checklist state');
+    const data = await res.json();
+    const checkedIndices = new Set(Array.isArray(data.checkedIndices) ? data.checkedIndices : []);
+    boxes.forEach((box, index) => {
+      box.classList.toggle('done', checkedIndices.has(index));
+    });
+  } catch (err) {
+    console.error(err);
+  }
+  updateChecklistProgress();
+}
+
+async function saveChecklistItem(index, done) {
+  try {
+    await fetch(`${CHECKLIST_API_BASE}/${index}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ done }),
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  updateChecklistProgress();
+  const index = getChecklistBoxes().indexOf(el);
+  if (index >= 0) {
+    saveChecklistItem(index, el.classList.contains('done'));
+  }
+}
+
+function updateChecklistProgress() {
+  const all = document.querySelectorAll('.check-box').length;
+  const done = document.querySelectorAll('.check-box.done').length;
+  const pct = Math.round((done / all) * 100);
+  document.getElementById('checklist-progress').style.width = pct + '%';
+  document.getElementById('checklist-progress-label').textContent = `${done} of ${all} complete`;
+}
+
+// Init
+updateModel();
+updateQuit();
+loadChecklistState();
+</script>
+</body>
+</html>
