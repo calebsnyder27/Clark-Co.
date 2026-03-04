@@ -4,7 +4,9 @@ const path = require('node:path');
 
 const PORT = process.env.PORT || 3000;
 const HTML_FILE = path.join(__dirname, 'clark-and-co-business-plan.html');
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = process.env.VERCEL
+  ? path.join('/tmp', 'clark-and-co')
+  : path.join(__dirname, 'data');
 const STATE_FILE = path.join(DATA_DIR, 'checklist-state.json');
 
 function sendJson(res, statusCode, payload) {
@@ -78,7 +80,7 @@ function parseBody(req) {
   });
 }
 
-const server = http.createServer(async (req, res) => {
+async function requestHandler(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const { pathname } = url;
 
@@ -130,9 +132,27 @@ const server = http.createServer(async (req, res) => {
 
   res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
   res.end(JSON.stringify({ error: 'Not found' }));
+}
+
+const server = http.createServer(async (req, res) => {
+  try {
+    await requestHandler(req, res);
+  } catch (error) {
+    sendJson(res, 500, { error: error?.message || 'Internal server error' });
+  }
 });
 
-server.listen(PORT, async () => {
-  await ensureStateFile();
-  console.log(`Clark & Co server listening on http://localhost:${PORT}`);
-});
+module.exports = async (req, res) => {
+  try {
+    await requestHandler(req, res);
+  } catch (error) {
+    sendJson(res, 500, { error: error?.message || 'Internal server error' });
+  }
+};
+
+if (require.main === module) {
+  server.listen(PORT, async () => {
+    await ensureStateFile();
+    console.log(`Clark & Co server listening on http://localhost:${PORT}`);
+  });
+}

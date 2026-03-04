@@ -2,7 +2,9 @@
   "name": "clark-and-co",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "npm@10",
   "scripts": {
+    "dev": "node server.js",
     "start": "node server.js"
   }
 }
